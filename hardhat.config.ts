@@ -10,6 +10,7 @@ import '@typechain/hardhat';
 import 'hardhat-deploy';
 import 'solidity-coverage';
 import 'hardhat-gas-reporter';
+import { networks } from './helpers/networks';
 
 dotenv.config();
 
@@ -19,17 +20,7 @@ const config: HardhatUserConfig = {
 
   // network config
   networks: {
-    hardhat: {
-      throwOnCallFailures: true,
-      throwOnTransactionFailures: true,
-    },
-    
-    harmonyTestnet: {
-      url: 'https://api.s0.b.hmny.io',
-      accounts: [`0x${process.env.PRIVATE_KEY}`],
-      live: true,
-      saveDeployments: true,
-    },
+    ...networks,
   },
 
   // solidity config

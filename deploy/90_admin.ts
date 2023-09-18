@@ -10,10 +10,11 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
     args: [],
     log: true,
     skipIfAlreadyDeployed: true,
+    contract: 'NFTAdmin',
   });
 };
 
 export default func;
 func.id = 'NFTAdmin';
-func.tags = ['hardhat', 'demo'];
+func.tags = ['hardhat', 'v1'];
 func.dependencies = [];

@@ -10,7 +10,9 @@
     "lint:ts": "eslint . --ext .js,.ts",
     "deploy": "hardhat deploy",
     "deploy:hardhat": "hardhat deploy --network hardhat --tags hardhat",
-    "deploy:harmonyTestnet": "hardhat deploy --network harmonyTestnet --tags harmonyTestnet",
+    "deploy:harmonyTestnet": "hardhat deploy --network harmonyTestnet --tags",
+    "deploy:saakuruTestnet": "hardhat deploy --network saakuruTestnet --tags",
+    "deploy:saakuruMainnet": "hardhat deploy --network saakuruMainnet --tags",
     "runCommands": "ts-node scripts/runCommands.ts"
   },
   "dependencies": {

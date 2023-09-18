@@ -17,6 +17,7 @@
     "./tests",
     "./deploy",
     "./helper",
-    "./scripts"
+    "./scripts",
+    "./helpers"
   ],
 }

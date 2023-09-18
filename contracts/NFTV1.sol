@@ -32,9 +32,11 @@ contract NFTV1 is INFT, Ownable, CoreNFT, Initializable {
     /// @notice airdrop for use
     function airdrop(
         address account_,
-        uint256 tokenId_
+        uint256 tokenId_,
+        string memory uri_
     ) external onlyOwner {
         _safeMint(account_, tokenId_);
+        _setURI(tokenId_, uri_);
     }
 
     /// @notice burn token
