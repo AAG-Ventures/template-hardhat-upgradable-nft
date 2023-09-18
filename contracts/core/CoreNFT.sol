@@ -10,6 +10,7 @@ abstract contract CoreNFT is ERC721, ERC721Enumerable, Ownable {
     string private _uri;
     string private _initName;
     string private _initSymbol;
+    uint256 private _tokenIdTracker;
 
     mapping(uint256 => string) private _tokenURIs;
 
@@ -58,5 +59,12 @@ abstract contract CoreNFT is ERC721, ERC721Enumerable, Ownable {
 
     function _setURI(uint256 tokenId_, string memory uri_) internal {
         _tokenURIs[tokenId_] = uri_;
+    }
+
+    function _mint(address account_, string memory uri_) internal virtual {
+        _tokenIdTracker = _tokenIdTracker + 1;
+        uint256 _tokenId = _tokenIdTracker;
+        _safeMint(account_, _tokenId);
+        _setURI(_tokenId, uri_);
     }
 }
