@@ -13,6 +13,7 @@
     "deploy:harmonyTestnet": "hardhat deploy --network harmonyTestnet --tags",
     "deploy:saakuruTestnet": "hardhat deploy --network saakuruTestnet --tags",
     "deploy:saakuruMainnet": "hardhat deploy --network saakuruMainnet --tags",
+    "interact": "ts-node scripts/interact.ts",
     "runCommands": "ts-node scripts/runCommands.ts"
   },
   "dependencies": {

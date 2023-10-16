@@ -3,7 +3,7 @@ import { ethers, waffle } from 'hardhat';
 import { nftFixture } from './shared/aagNft';
 import variants from '../variants';
 import { Wallet } from 'ethers';
-import { NFTV1,} from '../dist/types';
+import { NFTV1 } from '../dist/types';
 
 const argv = variants.demo;
 
@@ -21,12 +21,19 @@ describe('AAGNFT', () => {
 
   beforeEach('deploy fixture', async () => {
     ({ nft } = await loadFixture(nftFixture));
+    // mint 
+    await nft.airdrop(users[1].address, 'ipfs://test');
   });
 
   it('check status', async () => {
     expect(await nft.owner()).eq(users[0].address);
     expect(await nft.name()).eq(argv.name);
     expect(await nft.symbol()).eq(argv.symbol);
+  });
+
+  it('Should not allow transfer minted', async () => {
+    await expect(nft.connect(users[1]).transferFrom(users[1].address, users[2].address, 1))
+      .revertedWith('NFT is not transferrable');
   });
 
   describe('#init', () => {
