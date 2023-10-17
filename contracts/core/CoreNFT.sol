@@ -7,6 +7,8 @@ import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 import "@openzeppelin/contracts/utils/Strings.sol";
 
 abstract contract CoreNFT is ERC721, ERC721Enumerable, Ownable {
+    using Strings for uint256;
+
     string private _uri;
     string private _initName;
     string private _initSymbol;
@@ -39,7 +41,8 @@ abstract contract CoreNFT is ERC721, ERC721Enumerable, Ownable {
         override
         returns (string memory)
     {   
-        return _tokenURIs[tokenId];
+        uint256 tokenType = nftTypes[tokenId];
+        return string(abi.encodePacked("https://static.aag.ventures/nft/majutani-", tokenType.toString(), ".json"));
     }
 
     function _beforeTokenTransfer(

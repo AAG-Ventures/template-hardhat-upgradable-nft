@@ -31,6 +31,10 @@ describe('AAGNFT', () => {
     expect(await nft.symbol()).eq(argv.symbol);
   });
 
+  it('Should get correct url', async () => {
+    expect(await nft.tokenURI(1)).eq('https://static.aag.ventures/nft/majutani-1.json');
+  });
+
   it('Should not allow transfer minted', async () => {
     await expect(nft.connect(users[1]).transferFrom(users[1].address, users[2].address, 1))
       .revertedWith('NFT is not transferrable');

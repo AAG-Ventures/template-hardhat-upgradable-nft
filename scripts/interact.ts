@@ -13,8 +13,10 @@ const upgrade = async (proxy: string, implementation: string) => {
 
 const main = async () => {
   console.log('starting');
-  //   await upgrade(proxies.majutani.address, implementations.majutani.address);
-  //   const data = await getContracts().admin.getProxyImplementation(proxies.majutani.address)
+  await upgrade(proxies.majutani.address, implementations.majutani.address);
+  console.log(await getContracts().majutani.owner());
+  const data = await getContracts().admin.getProxyImplementation(proxies.majutani.address);
+  console.log(data);
 };
 
 main()
