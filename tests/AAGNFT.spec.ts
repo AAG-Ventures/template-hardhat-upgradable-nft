@@ -35,10 +35,10 @@ describe('AAGNFT', () => {
     expect(await nft.tokenURI(1)).eq('ipfs://test');
   });
 
-  // it('Should not allow transfer minted', async () => {
-  //   await expect(nft.connect(users[1]).transferFrom(users[1].address, users[2].address, 1))
-  //     .revertedWith('NFT is not transferrable');
-  // });
+  it('Should not allow transfer minted', async () => {
+    await expect(nft.connect(users[1]).transferFrom(users[1].address, users[2].address, 1))
+      .revertedWith('NFT is not transferrable');
+  });
 
   describe('#init', () => {
     it('should revert', async () => {
