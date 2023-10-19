@@ -30,11 +30,8 @@ contract NFTV1 is INFT, Ownable, CoreNFT, Initializable {
      * Admin Mutable Function
     ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== */
     /// @notice airdrop for use
-    function airdrop(
-        address account_,
-        string memory uri_
-    ) external onlyOwner {
-       _mint(account_, uri_);
+    function airdrop(address account_, string memory uri_) external onlyOwner {
+        _mint(account_, uri_);
     }
 
     /// @notice burn token
@@ -43,18 +40,19 @@ contract NFTV1 is INFT, Ownable, CoreNFT, Initializable {
     }
 
     /// @notice setup uri
-    function setURI(uint256 tokenId_, string memory uri_) external onlyExistingNft(tokenId_) onlyOwner {
+    function setURI(
+        uint256 tokenId_,
+        string memory uri_
+    ) external onlyExistingNft(tokenId_) onlyOwner {
         _setURI(tokenId_, uri_);
     }
 
     /** ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
      * View Functions
     ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== */
-    function getOwnedTokens(address address_)
-        external
-        view
-        returns (TokenView[] memory)
-    {
+    function getOwnedTokens(
+        address address_
+    ) external view returns (TokenView[] memory) {
         uint256 balance_ = ERC721.balanceOf(address_);
         TokenView[] memory tokens_ = new TokenView[](balance_);
         if (balance_ > 0) {
@@ -75,27 +73,20 @@ contract NFTV1 is INFT, Ownable, CoreNFT, Initializable {
         require(_exists(id_), "NFT: nonexistent token");
         _;
     }
-    
+
     /// @dev lock transfer when token is locked
     function _beforeTokenTransfer(
         address from,
         address to,
         uint256 tokenId
     ) internal override {
-        if(from != address(0) && to != address(0)) {
-            // throw error
-            revert("NFT is not transferrable");
-        }
         super._beforeTokenTransfer(from, to, tokenId);
     }
 
     /// @notice support interface
-    function supportsInterface(bytes4 interfaceId)
-        public
-        view
-        override
-        returns (bool)
-    {
+    function supportsInterface(
+        bytes4 interfaceId
+    ) public view override returns (bool) {
         return
             interfaceId == type(INFT).interfaceId ||
             super.supportsInterface(interfaceId);

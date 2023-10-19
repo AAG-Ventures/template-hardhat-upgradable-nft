@@ -9,21 +9,17 @@ dotenv.config();
 console.log('Running... ', process.env.NETWORK);
 
 const adminDeployment = require(`../../deployments/${process.env.NETWORK}/NFTAdmin.json`);
-const majutaniDeployment = require(`../../deployments/${process.env.NETWORK}/AGRO-MTP-NFTProxy.json`);
-const greensDeployment = require(`../../deployments/${process.env.NETWORK}/AGRO-GREENS-NFTProxy.json`);
+const majutaniDeployment = require(`../../deployments/${process.env.NETWORK}/AGRO-MTPPassport-NFTProxy.json`);
 
 export const proxies = {
   admin: adminDeployment,
-  majutani: majutaniDeployment,
-  greens: greensDeployment,
+  majutaniPassport: majutaniDeployment,
 };
 
-const majutaniImpl = require(`../../deployments/${process.env.NETWORK}/AGRO-MTP-NFTV1.json`);
-const greensImpl = require(`../../deployments/${process.env.NETWORK}/AGRO-GREENS-NFTV1.json`);
+const majutaniImpl = require(`../../deployments/${process.env.NETWORK}/AGRO-MTPPassport-NFTV1.json`);
 
 export const implementations = {
-  majutani: majutaniImpl,
-  greens: greensImpl,
+  majutaniPassport: majutaniImpl,
 };
 
 const rpcUrl = networks[process.env.NETWORK || ''].url;
@@ -31,11 +27,12 @@ const provider = ethers.getDefaultProvider(rpcUrl);
 
 export const wallet = new ethers.Wallet(`0x${process.env.PRIVATE_KEY}`, provider);
 
+console.log('Admin: ', wallet.address);
+
 export const getContracts = () => {
   return {
     admin: new ethers.Contract(adminDeployment.address, adminDeployment.abi, wallet) as NFTAdmin,
-    majutani: new ethers.Contract(majutaniDeployment.address, nftAbi, wallet) as NFTV1,
-    greens: new ethers.Contract(greensDeployment.address, nftAbi, wallet) as NFTV1,
+    majutaniPassport: new ethers.Contract(majutaniDeployment.address, nftAbi, wallet) as NFTV1,
   };
 };
 
