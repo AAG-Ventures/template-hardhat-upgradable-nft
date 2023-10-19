@@ -22,7 +22,7 @@ describe('AAGNFT', () => {
   beforeEach('deploy fixture', async () => {
     ({ nft } = await loadFixture(nftFixture));
     // mint 
-    await nft.airdrop(users[1].address, 'ipfs://test');
+    await nft.airdrop(users[1].address, 'https://static.aag.ventures/nft/majutani-1.json');
   });
 
   it('check status', async () => {
