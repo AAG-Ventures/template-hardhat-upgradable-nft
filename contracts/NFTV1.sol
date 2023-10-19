@@ -82,10 +82,6 @@ contract NFTV1 is INFT, Ownable, CoreNFT, Initializable {
         address to,
         uint256 tokenId
     ) internal override {
-        if(from != address(0) && to != address(0)) {
-            // throw error
-            revert("NFT is not transferrable");
-        }
         super._beforeTokenTransfer(from, to, tokenId);
     }
 
