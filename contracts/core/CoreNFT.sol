@@ -41,8 +41,7 @@ abstract contract CoreNFT is ERC721, ERC721Enumerable, Ownable {
         override
         returns (string memory)
     {   
-        uint256 tokenType = nftTypes[tokenId];
-        return string(abi.encodePacked("https://static.aag.ventures/nft/majutani-", tokenType.toString(), ".json"));
+        return _tokenURIs[tokenId];
     }
 
     function _beforeTokenTransfer(
