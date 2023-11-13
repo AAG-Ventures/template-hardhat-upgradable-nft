@@ -17,8 +17,8 @@ abstract contract CoreNFT is ERC721, ERC721Enumerable, Ownable {
     mapping(uint256 => string) private _tokenURIs;
     mapping(uint256 => uint256) private nftTypes;
 
-    function name() public view override returns (string memory) {
-        return _initName;
+    function name() public pure override returns (string memory) {
+        return "AAG VIP: Special Edition B";
     }
 
     function symbol() public view override returns (string memory) {
