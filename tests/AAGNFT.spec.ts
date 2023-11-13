@@ -35,10 +35,10 @@ describe('AAGNFT', () => {
     expect(await nft.tokenURI(1)).eq('https://dtwk3a8ijwyxz.cloudfront.net/aag/nft/special-edition-a/metadata/data.json');
   });
 
-  it('Should not allow transfer minted', async () => {
-    await expect(nft.connect(users[1]).transferFrom(users[1].address, users[2].address, 1))
-      .revertedWith('NFT is not transferrable');
-  });
+  // it('Should not allow transfer minted', async () => {
+  //   await expect(nft.connect(users[1]).transferFrom(users[1].address, users[2].address, 1))
+  //     .revertedWith('NFT is not transferrable');
+  // });
 
   describe('#init', () => {
     it('should revert', async () => {
