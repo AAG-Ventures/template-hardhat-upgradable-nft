@@ -5,7 +5,7 @@ import variants from '../variants';
 import { Wallet } from 'ethers';
 import { NFTV1 } from '../dist/types';
 
-const argv = variants.AAGVIPA;
+const argv = variants.AAGVIPB;
 
 use(waffle.solidity);
 
@@ -22,7 +22,7 @@ describe('AAGNFT', () => {
   beforeEach('deploy fixture', async () => {
     ({ nft } = await loadFixture(nftFixture));
     // mint 
-    await nft.airdrop(users[1].address, 'https://dtwk3a8ijwyxz.cloudfront.net/aag/nft/special-edition-a/metadata/data.json');
+    await nft.airdrop(users[1].address, 'https://dtwk3a8ijwyxz.cloudfront.net/aag/nft/special-edition-b/metadata/data.json');
   });
 
   it('check status', async () => {
@@ -32,7 +32,7 @@ describe('AAGNFT', () => {
   });
 
   it('Should get correct url', async () => {
-    expect(await nft.tokenURI(1)).eq('https://dtwk3a8ijwyxz.cloudfront.net/aag/nft/special-edition-a/metadata/data.json');
+    expect(await nft.tokenURI(1)).eq('https://dtwk3a8ijwyxz.cloudfront.net/aag/nft/special-edition-b/metadata/data.json');
   });
 
   // it('Should not allow transfer minted', async () => {

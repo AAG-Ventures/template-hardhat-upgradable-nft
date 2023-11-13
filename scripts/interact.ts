@@ -13,9 +13,9 @@ const upgrade = async (proxy: string, implementation: string) => {
 
 const main = async () => {
   console.log('starting');
-  await upgrade(proxies.AAGVIPA.address, implementations.AAGVIPA.address);
-  console.log(await getContracts().AAGVIPA.owner());
-  const data = await getContracts().admin.getProxyImplementation(proxies.AAGVIPA.address);
+  await upgrade(proxies.AAGVIPB.address, implementations.AAGVIPB.address);
+  console.log(await getContracts().AAGVIPB.owner());
+  const data = await getContracts().admin.getProxyImplementation(proxies.AAGVIPB.address);
   console.log(data);
 };
 
