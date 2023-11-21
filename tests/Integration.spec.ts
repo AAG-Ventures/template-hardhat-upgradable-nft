@@ -6,7 +6,7 @@ import variants from '../variants';
 import { Wallet } from 'ethers';
 import { NFTV1, NFTProxy, NFTAdmin } from '../dist/types';
 
-const argv = variants.AAGVIPC;
+const argv = variants.AAGVIPD;
 
 use(waffle.solidity);
 

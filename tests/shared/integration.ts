@@ -3,7 +3,7 @@ import { Fixture } from 'ethereum-waffle';
 import { NFTProxy, NFTAdmin, NFTV1 } from '../../dist/types';
 import variants from '../../variants';
 
-const argv = variants.AAGVIPC;
+const argv = variants.AAGVIPD;
 
 interface ContractFixture {
   nft: NFTV1;
