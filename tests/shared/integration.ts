@@ -1,9 +1,9 @@
 import { ethers } from 'hardhat';
 import { Fixture } from 'ethereum-waffle';
 import { NFTProxy, NFTAdmin, NFTV1 } from '../../dist/types';
-import variants from "../../variants";
+import variants from '../../variants';
 
-const argv = variants.AAGVIPA;
+const argv = variants.AAGVIPC;
 
 interface ContractFixture {
   nft: NFTV1;

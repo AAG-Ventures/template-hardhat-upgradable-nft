@@ -9,16 +9,16 @@ dotenv.config();
 console.log('Running... ', process.env.NETWORK);
 
 const adminDeployment = require(`../../deployments/${process.env.NETWORK}/NFTAdmin.json`);
-const AAGVIPADeployment = require(`../../deployments/${process.env.NETWORK}/AAGVIPA-NFTProxy.json`);
+const AAGVIPCDeployment = require(`../../deployments/${process.env.NETWORK}/AAGVIPC-NFTProxy.json`);
 
 export const proxies = {
   admin: adminDeployment,
-  AAGVIPA: AAGVIPADeployment,
+  AAGVIPC: AAGVIPCDeployment,
 };
 
-const AAGVIPAImpl = require(`../../deployments/${process.env.NETWORK}/AAGVIPA-NFTV1.json`);
+const AAGVIPCImpl = require(`../../deployments/${process.env.NETWORK}/AAGVIPC-NFTV1.json`);
 export const implementations = {
-  AAGVIPA: AAGVIPAImpl,
+  AAGVIPC: AAGVIPCImpl,
 };
 
 const rpcUrl = networks[process.env.NETWORK || ''].url;
@@ -29,7 +29,7 @@ export const wallet = new ethers.Wallet(`0x${process.env.PRIVATE_KEY}`, provider
 export const getContracts = () => {
   return {
     admin: new ethers.Contract(adminDeployment.address, adminDeployment.abi, wallet) as NFTAdmin,
-    AAGVIPA: new ethers.Contract(AAGVIPADeployment.address, nftAbi, wallet) as NFTV1,
+    AAGVIPC: new ethers.Contract(AAGVIPCDeployment.address, nftAbi, wallet) as NFTV1,
   };
 };
 

@@ -1,5 +1,5 @@
-import { AAGVIPA } from './AAGVIPA';
+import { AAGVIP } from './AAGVIP';
 
 export default {
-  'AAGVIPA': AAGVIPA,
+  'AAGVIPC': AAGVIP,
 };

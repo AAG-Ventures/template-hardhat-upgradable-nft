@@ -8,7 +8,7 @@ interface ContractFixture {
   nft: NFTV1;
 }
 
-const argv = variants.AAGVIPA;
+const argv = variants.AAGVIPC;
 
 export const nftFixture: Fixture<ContractFixture> =
   async function (): Promise<ContractFixture> {
