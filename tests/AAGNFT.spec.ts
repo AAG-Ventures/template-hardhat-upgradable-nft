@@ -5,7 +5,7 @@ import variants from '../variants';
 import { Wallet } from 'ethers';
 import { NFTV1 } from '../dist/types';
 
-const argv = variants.demo;
+const argv = variants.duo;
 
 use(waffle.solidity);
 
@@ -32,7 +32,7 @@ describe('AAGNFT', () => {
   });
 
   it('Should get correct url', async () => {
-    expect(await nft.tokenURI(1)).eq('https://static.aag.ventures/nft/majutani-1.json');
+    expect(await nft.tokenURI(1)).eq('ipfs://test');
   });
 
   it('Should not allow transfer minted', async () => {
