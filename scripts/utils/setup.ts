@@ -17,11 +17,9 @@ export const proxies = {
 };
 
 const majutaniImpl = require(`../../deployments/${process.env.NETWORK}/DUO-NFTV1.json`);
-const greensImpl = require(`../../deployments/${process.env.NETWORK}/AGRO-GREENS-NFTV1.json`);
 
 export const implementations = {
   majutani: majutaniImpl,
-  greens: greensImpl,
 };
 
 const rpcUrl = networks[process.env.NETWORK || ''].url;
