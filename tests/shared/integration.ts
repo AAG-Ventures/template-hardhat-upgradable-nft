@@ -1,9 +1,7 @@
 import { ethers } from 'hardhat';
 import { Fixture } from 'ethereum-waffle';
 import { NFTProxy, NFTAdmin, NFTV1 } from '../../dist/types';
-import variants from "../../variants";
-
-const argv = variants.demo;
+import { deployments } from '../../variants';
 
 interface ContractFixture {
   nft: NFTV1;
@@ -37,8 +35,8 @@ export const integrationFixture: Fixture<ContractFixture> =
       nft.address,
       admin.address,
       nft.interface.encodeFunctionData('init', [
-        argv.name,
-        argv.symbol,
+        deployments[0].name,
+        deployments[0].symbol,
         users[0].address,
       ]),
     ) as NFTProxy;

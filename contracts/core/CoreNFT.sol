@@ -15,7 +15,6 @@ abstract contract CoreNFT is ERC721, ERC721Enumerable, Ownable {
     uint256 private _tokenIdTracker;
 
     mapping(uint256 => string) private _tokenURIs;
-    mapping(uint256 => uint256) private nftTypes;
 
     function name() public view override returns (string memory) {
         return _initName;
@@ -41,8 +40,7 @@ abstract contract CoreNFT is ERC721, ERC721Enumerable, Ownable {
         override
         returns (string memory)
     {   
-        uint256 tokenType = nftTypes[tokenId];
-        return string(abi.encodePacked("https://static.aag.ventures/nft/majutani-", tokenType.toString(), ".json"));
+        return _tokenURIs[tokenId];
     }
 
     function _beforeTokenTransfer(
@@ -68,11 +66,6 @@ abstract contract CoreNFT is ERC721, ERC721Enumerable, Ownable {
     function _mint(address account_, string memory uri_) internal virtual {
         _tokenIdTracker = _tokenIdTracker + 1;
         uint256 _tokenId = _tokenIdTracker;
-        if (_tokenIdTracker <= 1000000) {
-            nftTypes[_tokenId] = 1;
-        } else {
-            nftTypes[_tokenId] = 2;
-        }
         _safeMint(account_, _tokenId);
         _setURI(_tokenId, uri_);
     }
