@@ -4,18 +4,18 @@ import { integrationFixture } from './shared/integration';
 import variants from '../variants';
 
 import { Wallet } from 'ethers';
-import { NFTV1, NFTProxy, NFTAdmin } from '../dist/types';
+import { NFTV2, NFTProxy, NFTAdmin } from '../dist/types';
 
-const argv = variants.demo
+const argv = variants.demo;
 
 use(waffle.solidity);
 
 describe('Integration', () => {
   let users: Wallet[];
-  let nft: NFTV1;
+  let nft: NFTV2;
   let proxy: NFTProxy;
   let admin: NFTAdmin;
-  let instance: NFTV1;
+  let instance: NFTV2;
   let loadFixture: ReturnType<typeof waffle.createFixtureLoader>;
 
   before('create fixture loader', async () => {
@@ -36,7 +36,7 @@ describe('Integration', () => {
     expect(await admin.owner()).eq(users[0].address);
     expect(await admin.getProxyAdmin(proxy.address)).eq(admin.address);
     expect(await admin.getProxyImplementation(proxy.address)).eq(nft.address);
- 
+
     /**
      * proxy status from nft
      */
@@ -51,6 +51,7 @@ describe('Integration', () => {
         'Token Name',
         'TN',
         ethers.constants.AddressZero,
+        users[1].address,
       )).revertedWith('Initializable: contract is already initialized');
     });
   });

@@ -1,12 +1,12 @@
 import { ethers } from 'hardhat';
 import { Fixture } from 'ethereum-waffle';
-import { NFTProxy, NFTAdmin, NFTV1 } from '../../dist/types';
-import variants from "../../variants";
+import { NFTProxy, NFTAdmin, NFTV2 } from '../../dist/types';
+import variants from '../../variants';
 
 const argv = variants.demo;
 
 interface ContractFixture {
-  nft: NFTV1;
+  nft: NFTV2;
   admin: NFTAdmin;
   proxy: NFTProxy;
 }
@@ -14,11 +14,13 @@ interface ContractFixture {
 export const integrationFixture: Fixture<ContractFixture> =
   async function (): Promise<ContractFixture> {
     const users = await ethers.getSigners();
+    const owner = users[0];
+    const assignedAdmin = users[1];
 
     // nft
     const nft = await (
-      await ethers.getContractFactory('NFTV1')
-    ).deploy() as NFTV1;
+      await ethers.getContractFactory('NFTV2')
+    ).deploy() as NFTV2;
     await nft.deployed();
 
     // admin
@@ -39,10 +41,11 @@ export const integrationFixture: Fixture<ContractFixture> =
       nft.interface.encodeFunctionData('init', [
         argv.name,
         argv.symbol,
-        users[0].address,
+        owner.address,
+        assignedAdmin.address,
       ]),
     ) as NFTProxy;
-    
+
     await proxy.deployed();
 
     return {

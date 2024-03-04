@@ -2,32 +2,39 @@ import { ethers } from 'hardhat';
 import variants from '../../variants';
 
 import { Fixture } from 'ethereum-waffle';
-import { NFTV1 } from '../../dist/types';
+import { NFTV2 } from '../../dist/types';
+import { Wallet } from 'ethers';
 
 interface ContractFixture {
-  nft: NFTV1;
+  nft: NFTV2;
+  assignedAdmin: Wallet;
 }
 
 const argv = variants.demo;
 
 export const nftFixture: Fixture<ContractFixture> =
-  async function (): Promise<ContractFixture> {
+  async function (users: Wallet[]): Promise<ContractFixture> {
     /**
      * V1
      */
     const nft = (await (
-      await ethers.getContractFactory('NFTV1')
-    ).deploy()) as NFTV1;
+      await ethers.getContractFactory('NFTV2')
+    ).deploy()) as NFTV2;
+
     await nft.deployed();
+
+    const owner = users[0];
+    const assignedAdmin = users[1];
 
     // init
     await nft.init(
       argv.name,
       argv.symbol,
-      (await ethers.getSigners())[0].address,
+      owner.address,
+      assignedAdmin.address,
     );
-    
+
     return {
-      nft,
+      nft, assignedAdmin,
     };
   };
