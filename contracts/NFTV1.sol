@@ -10,6 +10,8 @@ import "./interface/INFT.sol";
 import "./core/CoreNFT.sol";
 
 contract NFTV1 is INFT, Ownable, CoreNFT, Initializable {
+    mapping(address => bool) public admins;
+
     // solhint-disable-next-line
     constructor() ERC721("", "") {}
 
@@ -19,11 +21,13 @@ contract NFTV1 is INFT, Ownable, CoreNFT, Initializable {
     function init(
         string memory name_,
         string memory symbol_,
-        address owner_
+        address owner_,
+        address admin_
     ) external initializer {
         _setName(name_);
         _setSymbol(symbol_);
         _transferOwnership(owner_);
+        _setAdmin(admin_, true);
     }
 
     /** ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
@@ -33,18 +37,23 @@ contract NFTV1 is INFT, Ownable, CoreNFT, Initializable {
     function airdrop(
         address account_,
         string memory uri_
-    ) external onlyOwner {
+    ) external onlyAdmin {
        _mint(account_, uri_);
     }
 
     /// @notice burn token
-    function burn(uint256 id_) public onlyExistingNft(id_) onlyOwner {
+    function burn(uint256 id_) public onlyExistingNft(id_) onlyAdmin {
         _burn(id_);
     }
 
     /// @notice setup uri
-    function setURI(uint256 tokenId_, string memory uri_) external onlyExistingNft(tokenId_) onlyOwner {
+    function setURI(uint256 tokenId_, string memory uri_) external onlyExistingNft(tokenId_) onlyAdmin {
         _setURI(tokenId_, uri_);
+    }
+
+    /// @notice setup admin
+    function setAdmin(address admin_, bool action_) external onlyOwner {
+        _setAdmin(admin_, action_);
     }
 
     /** ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
@@ -75,7 +84,14 @@ contract NFTV1 is INFT, Ownable, CoreNFT, Initializable {
         require(_exists(id_), "NFT: nonexistent token");
         _;
     }
-    
+
+    /// @notice only contract admin
+    modifier onlyAdmin() {
+        bool _isAdmin = admins[msg.sender];
+        require(_isAdmin || msg.sender == owner(), "NFT: not admin");
+        _;
+    }
+
     /// @dev lock transfer when token is locked
     function _beforeTokenTransfer(
         address from,
@@ -95,5 +111,14 @@ contract NFTV1 is INFT, Ownable, CoreNFT, Initializable {
         return
             interfaceId == type(INFT).interfaceId ||
             super.supportsInterface(interfaceId);
+    }
+
+    /**
+     @notice use false to disable and true to enable
+     */
+
+    function _setAdmin(address admin_, bool action) internal {
+        require(admin_ != address(0), "NFT: admin is zero address");
+        admins[admin_] = action;
     }
 }

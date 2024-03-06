@@ -2,7 +2,7 @@ import variants from '../variants/index';
 
 import { HardhatRuntimeEnvironment } from 'hardhat/types';
 import { DeployFunction } from 'hardhat-deploy/types';
-import { NFTV2 } from '../dist/types';
+import { NFTV1 } from '../dist/types';
 import config from '../config';
 
 const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
@@ -14,7 +14,7 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
 
   // nft deployment info
   const nftDeployment = await hre.deployments.get(variants[config.VARIANT_TYPE].deploymentPrefix + '-NFTV1');
-  const nftContract = await hre.ethers.getContractAt('NFTV1', nftDeployment.address) as NFTV2;
+  const nftContract = await hre.ethers.getContractAt('NFTV1', nftDeployment.address) as NFTV1;
 
   /**
    * - proxy constructor
