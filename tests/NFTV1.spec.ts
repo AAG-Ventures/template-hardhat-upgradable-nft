@@ -1,19 +1,19 @@
 import { expect, use } from 'chai';
 import { ethers, waffle } from 'hardhat';
-import { nftFixture } from './shared/nftv2';
+import { nftFixture } from './shared/nftv1';
 import variants from '../variants';
 import { Wallet } from 'ethers';
-import { NFTV2 } from '../dist/types';
+import { NFTV1 } from '../dist/types';
 
 const argv = variants.demo;
 
 use(waffle.solidity);
 
-describe('NFTV2', () => {
+describe('NFTV1', () => {
   let users: Wallet[];
 
   let owner: Wallet, assignedAdmin: Wallet, user: Wallet;
-  let nft: NFTV2;
+  let nft: NFTV1;
 
   let loadFixture: ReturnType<typeof waffle.createFixtureLoader>;
 
@@ -33,7 +33,7 @@ describe('NFTV2', () => {
     expect(await nft.owner()).eq(owner.address);
     expect(await nft.name()).eq(argv.name);
     expect(await nft.symbol()).eq(argv.symbol);
-    expect(await nft.admin()).eq(assignedAdmin.address);
+    expect(await nft.isAdmin(assignedAdmin.address)).eq(true);
   });
 
   describe('#init', () => {
@@ -48,15 +48,15 @@ describe('NFTV2', () => {
       expect(await nft.owner()).eq(owner.address);
       expect(await nft.name()).eq(argv.name);
       expect(await nft.symbol()).eq(argv.symbol);
-      expect(await nft.admin()).eq(assignedAdmin.address);
+      expect(await nft.isAdmin(assignedAdmin.address)).eq(true);
     });
     it('can airdrop', async () => {
       await nft.airdrop(user.address, 'ipfs://testnet_hash/');
       expect(await nft.balanceOf(user.address)).eq(1);
     });
     it('can set admin', async () => {
-      await nft.setAdmin(user.address);
-      expect(await nft.admin()).eq(user.address);
+      await nft.setAdmin(user.address, true);
+      expect(await nft.isAdmin(user.address)).eq(true);
     });
   });
 
@@ -68,14 +68,14 @@ describe('NFTV2', () => {
       expect(await nft.owner()).eq(owner.address);
       expect(await nft.name()).eq(argv.name);
       expect(await nft.symbol()).eq(argv.symbol);
-      expect(await nft.admin()).eq(assignedAdmin.address);
+      expect(await nft.isAdmin(assignedAdmin.address)).eq(true);
     });
     it('can airdrop', async () => {
       await nft.connect(assignedAdmin).airdrop(user.address, 'ipfs://testnet_hash/');
       expect(await nft.balanceOf(user.address)).eq(1);
     });
     it('cannot set admin', async () => {
-      await expect(nft.setAdmin(user.address))
+      await expect(nft.setAdmin(user.address, true))
         .revertedWith('Ownable: caller is not the owner');
     });
   });
@@ -88,14 +88,14 @@ describe('NFTV2', () => {
       expect(await nft.owner()).eq(owner.address);
       expect(await nft.name()).eq(argv.name);
       expect(await nft.symbol()).eq(argv.symbol);
-      expect(await nft.admin()).eq(assignedAdmin.address);
+      expect(await nft.isAdmin(assignedAdmin.address)).eq(true);
     });
     it('cannot airdrop', async () => {
       await expect(nft.airdrop(user.address, 'ipfs://testnet_hash/'))
         .revertedWith('NFT: not admin');
     });
     it('cannot set admin', async () => {
-      await expect(nft.setAdmin(user.address))
+      await expect(nft.setAdmin(user.address, true))
         .revertedWith('Ownable: caller is not the owner');
     });
   });

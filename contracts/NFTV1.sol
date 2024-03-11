@@ -76,6 +76,12 @@ contract NFTV1 is INFT, Ownable, CoreNFT, Initializable {
         return tokens_;
     }
 
+    function isAdmin(address admin_) external view returns (bool) {
+        bool _isAdmin = admins[admin_];
+        if (_isAdmin || admin_ == owner()) return true;
+        return false;
+    }
+
     /** ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
      * Modifiers
     ===== ===== ===== ===== ===== ===== ===== ===== ===== ===== */

@@ -2,11 +2,11 @@ import { ethers } from 'hardhat';
 import variants from '../../variants';
 
 import { Fixture } from 'ethereum-waffle';
-import { NFTV2 } from '../../dist/types';
+import { NFTV1 } from '../../dist/types';
 import { Wallet } from 'ethers';
 
 interface ContractFixture {
-  nft: NFTV2;
+  nft: NFTV1;
   assignedAdmin: Wallet;
 }
 
@@ -18,8 +18,8 @@ export const nftFixture: Fixture<ContractFixture> =
      * V1
      */
     const nft = (await (
-      await ethers.getContractFactory('NFTV2')
-    ).deploy()) as NFTV2;
+      await ethers.getContractFactory('NFTV1')
+    ).deploy()) as NFTV1;
 
     await nft.deployed();
 
