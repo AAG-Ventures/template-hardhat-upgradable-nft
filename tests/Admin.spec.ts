@@ -51,5 +51,13 @@ describe('Admin', () => {
       await nft.setAdmin(user.address, false);
       expect(await nft.isAdmin(user.address)).eq(false);
     });
+
+    it('should revert', async () => {
+      await nft.setAdmin(user.address, true);
+      await nft.setAdmin(user.address, false);
+      expect(await nft.isAdmin(user.address)).eq(false);
+      await expect(nft.setAdmin(assignedAdmin.address, false))
+        .revertedWith('NFT: last admin');
+    });
   });
 });
