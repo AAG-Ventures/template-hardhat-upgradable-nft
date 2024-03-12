@@ -11,6 +11,7 @@ import "./core/CoreNFT.sol";
 
 contract NFTV1 is INFT, Ownable, CoreNFT, Initializable {
     mapping(address => bool) public admins;
+    uint public adminCount;
 
     // solhint-disable-next-line
     constructor() ERC721("", "") {}
@@ -28,6 +29,7 @@ contract NFTV1 is INFT, Ownable, CoreNFT, Initializable {
         _setSymbol(symbol_);
         _transferOwnership(owner_);
         _setAdmin(admin_, true);
+        adminCount = 1;
     }
 
     /** ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
@@ -125,6 +127,14 @@ contract NFTV1 is INFT, Ownable, CoreNFT, Initializable {
 
     function _setAdmin(address admin_, bool action) internal {
         require(admin_ != address(0), "NFT: admin is zero address");
+        if (adminCount == 1) {
+            require(action, "NFT: last admin");
+        }
         admins[admin_] = action;
+        if (action) {
+            adminCount += 1;
+        } else {
+            adminCount -= 1;
+        }
     }
 }

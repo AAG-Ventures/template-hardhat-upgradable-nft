@@ -28,6 +28,7 @@ describe('Proxy', () => {
   beforeEach('deploy fixture', async () => {
     ({ nftv1, proxy, admin, owner, assignedAdmin } = await loadFixture(proxyFixture));
     nftv1Instance = nftv1.attach(proxy.address);
+    user = users[2];
   });
 
   describe('before upgrade', () => {
@@ -46,6 +47,8 @@ describe('Proxy', () => {
       expect(await nftv1Instance.owner()).eq(users[0].address);
       expect(await nftv1Instance.name()).eq(argv.name);
       expect(await nftv1Instance.symbol()).eq(argv.symbol);
+      expect(await nftv1Instance.isAdmin(assignedAdmin.address)).eq(true);
+      expect(await nftv1Instance.isAdmin(user.address)).eq(false);
     });
 
     describe('when reinitialized', () => {

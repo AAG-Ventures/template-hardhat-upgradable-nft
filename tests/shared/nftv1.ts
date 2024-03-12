@@ -7,6 +7,7 @@ import { Wallet } from 'ethers';
 
 interface ContractFixture {
   nft: NFTV1;
+  owner: Wallet;
   assignedAdmin: Wallet;
 }
 
@@ -35,6 +36,6 @@ export const nftFixture: Fixture<ContractFixture> =
     );
 
     return {
-      nft, assignedAdmin,
+      nft, owner, assignedAdmin,
     };
   };
